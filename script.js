@@ -43,8 +43,16 @@ btn.addEventListener("click", function (e) {
   } else if (result <= -1) {
     computerScore += 1;
   }
+  updateScore();
   showResult(result);
 });
+
+const updateScore = () => {
+  const humanSpan = document.querySelector(".human-score");
+  const computerSpan = document.querySelector(".computer-score");
+  humanSpan.textContent = `Human Score: ${humanScore}`;
+  computerSpan.textContent = `Computer Score: ${computerScore}`;
+};
 
 const showResult = (winner) => {
   const resultSpan = document.querySelector(".result-text");
