@@ -37,6 +37,10 @@ function playRound(humanChoice) {
 
 const btn = document.querySelector(".choice-btn");
 btn.addEventListener("click", function (e) {
+  // isGameWon needs to be implemented
+  if (isGameWon() !== 0) {
+    return;
+  }
   let result = playRound(e.target.value);
   if (result >= 1) {
     humanScore += 1;
@@ -44,7 +48,11 @@ btn.addEventListener("click", function (e) {
     computerScore += 1;
   }
   updateScore();
-  showResult(result);
+  showRoundResult(result);
+  const gameWon = isGameWon();
+  if (gameWon !== 0) {
+    declareWinner(gameWon);
+  }
 });
 
 const updateScore = () => {
@@ -54,7 +62,21 @@ const updateScore = () => {
   computerSpan.textContent = `Computer Score: ${computerScore}`;
 };
 
-const showResult = (winner) => {
+const declareWinner = (winner) => {
+  const body = document.querySelector("body");
+  const winnerDiv = document.createElement("div");
+  const winnerSpan = document.createElement("span");
+  winnerDiv.append(winnerSpan);
+  body.append(winnerDiv);
+
+  if (winner === 1) {
+    winnerSpan.textContent = "Player has won the game!";
+  } else {
+    winnerSpan.textContent = "Computer has won the game!";
+  }
+};
+
+const showRoundResult = (winner) => {
   const resultSpan = document.querySelector(".result-text");
   if (winner >= 1) {
     resultSpan.textContent = "Player won this round!";
@@ -62,5 +84,15 @@ const showResult = (winner) => {
     resultSpan.textContent = "This round ended as a draw";
   } else {
     resultSpan.textContent = "Computer won this round";
+  }
+};
+
+const isGameWon = () => {
+  if (humanScore === 5) {
+    return 1;
+  } else if (computerScore === 5) {
+    return -1;
+  } else {
+    return 0;
   }
 };
