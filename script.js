@@ -35,24 +35,25 @@ function playRound(humanChoice) {
   }
 }
 
-const btn = document.querySelector(".choice-btn");
-btn.addEventListener("click", function (e) {
-  // isGameWon needs to be implemented
-  if (isGameWon() !== 0) {
-    return;
-  }
-  let result = playRound(e.target.value);
-  if (result >= 1) {
-    humanScore += 1;
-  } else if (result <= -1) {
-    computerScore += 1;
-  }
-  updateScore();
-  showRoundResult(result);
-  const gameWon = isGameWon();
-  if (gameWon !== 0) {
-    declareWinner(gameWon);
-  }
+const btnList = document.querySelectorAll(".choice-btn");
+btnList.forEach((btn) => {
+  btn.addEventListener("click", function (e) {
+    if (isGameWon() !== 0) {
+      return;
+    }
+    let result = playRound(e.target.value);
+    if (result >= 1) {
+      humanScore += 1;
+    } else if (result <= -1) {
+      computerScore += 1;
+    }
+    updateScore();
+    showRoundResult(result);
+    const gameWon = isGameWon();
+    if (gameWon !== 0) {
+      declareWinner(gameWon);
+    }
+  });
 });
 
 const updateScore = () => {
